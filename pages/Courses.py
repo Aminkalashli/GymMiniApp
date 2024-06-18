@@ -3,7 +3,6 @@ from utils.utils import *
 import pandas as pd
 
 
-CON = st.session_state['connection']
 # this will return the list of data related to given atrribute
 def get_list(atr):
     query = f"SELECT DISTINCT {atr} FROM COURSES;"
@@ -33,18 +32,19 @@ def start_expander(expander, Data):
             query = 'SELECT Day, StartTime, Duration, CodC, Room FROM PROGRAM WHERE CodC IN (' + ','.join((l)for l in lcod) + ')'
             query_instructor = 'SELECT FisCode FROM PROGRAM WHERE CodC IN (' + ','.join((l)for l in lcod) + ') GROUP BY FisCode'
 
-            ins_table = execute_query(CON, query=query_instructor)
+            ins_table = execute_query(st.session_state['connection'], query=query_instructor)
             tempdf = pd.DataFrame(ins_table)
             fis_list = list()
+            
             for row in tempdf['FisCode']:
                 row = "'" + row + "'"
                 fis_list.append(row)
-            res_table = execute_query(CON, query=query)
+            res_table = execute_query(st.session_state['connection'], query=query)
             res_df = pd.DataFrame(res_table)
             st.dataframe(res_df, use_container_width=True)
 
             query_instructor_name = 'SELECT Name, Surname FROM INSTRUCTOR WHERE FisCode IN ('+ ','.join((l)for l in fis_list) +')'
-            name_result = execute_query(CON, query_instructor_name)
+            name_result = execute_query(st.session_state['connection'], query_instructor_name)
             df_name = pd.DataFrame(name_result)
             st.dataframe(df_name, use_container_width=True)
 
@@ -77,8 +77,9 @@ def course_page():
 
 
     with col2:
+        # check if the dataframe is empty returns a warning to user
         if df.empty:
-            st.warning("No result found", icon="🚨")
+            st.warning("No result has been found", icon="🚨")
         else:
             st.metric("# Total Courses", res_tot['Total'])
             st.dataframe(df, use_container_width=True)

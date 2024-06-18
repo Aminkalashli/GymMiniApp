@@ -1,5 +1,6 @@
 import streamlit as st
 from utils.utils import *
+from datetime import datetime
 
 
 # this function will check to our data shoud not be empty before committing
@@ -42,7 +43,7 @@ def create_form():
         FisCode = st.text_input("Fiscale Code")
         name = st.text_input("Name")
         surname = st.text_input("Surname")
-        birthDate = st.date_input("Birth Date")
+        birthDate = st.date_input("Birth Date", min_value=datetime(1900,1,1))
         email = st.text_input("Email", placeholder="example@mail.it")
         telephone = st.text_input("Telephone")
 
