@@ -32,19 +32,19 @@ def compact_format(num):
 
 
 def check_connection():
-
-    dialect = "mysql+pymysql"
-    username = "root"
-    password = "mypassword"
-    host = "localhost"
-    dbname = "gym"
+    # it is possible use database connection details predefined
+    # dialect = "mysql+pymysql"
+    # username = "root"
+    # password = "mypassword"
+    # host = "localhost"
+    # dbname = "gym"
 
     # Here is you can put detail of the databese as input
-    # dialect = st.sidebar.text_input("dialect")
-    # username = st.sidebar.text_input("username")
-    # password = st.sidebar.text_input("password")
-    # host = st.sidebar.text_input("host")
-    # dbname = st.sidebar.text_input("database name")
+    dialect = st.sidebar.text_input("dialect")
+    username = st.sidebar.text_input("username")
+    password = st.sidebar.text_input("password")
+    host = st.sidebar.text_input("host")
+    dbname = st.sidebar.text_input("database name")
 
     if "connection" not in st.session_state.keys():
         st.session_state["connection"]=False
